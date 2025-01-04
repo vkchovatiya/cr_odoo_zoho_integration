@@ -5,7 +5,7 @@
     'version': '17.0',
     'category': 'Tools',
     'summary': 'Module for Zoho integration with Odoo',
-    'author': '',
+    'author': 'Creyox Technologies',
     'depends': ['base'],
     'data': [
         'security/ir.model.access.csv',
@@ -13,6 +13,6 @@
     ],
     'installable': True,
     'application': True,
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
 }
 
