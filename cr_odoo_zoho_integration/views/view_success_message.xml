@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="success_redirect_template">
+        <div style="text-align: center; padding: 20px; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; max-width: 500px; margin: 50px auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <div style="font-size: 50px; color: #28a745;">
+                <i class="fa fa-check-circle"></i>
+            </div>
+            <h2 style="color: #155724;">Your authentication was successful!</h2>
+            <p style="color: #155724;">You will be redirected shortly...</p>
+        </div>
+        <script type="text/javascript">
+            setTimeout(function() {
+                window.location.href = "/web";
+            }, 5000);
+        </script>
+    </template>
+</odoo>

@@ -5,11 +5,12 @@
     'version': '17.0',
     'category': 'Tools',
     'summary': 'Module for Zoho integration with Odoo',
-    'author': 'Creyox Technologies',
+    'author': '',
     'depends': ['base'],
     'data': [
         'security/ir.model.access.csv',
         'views/zoho_config_views.xml',
+        'views/view_success_message.xml',
     ],
     'installable': True,
     'application': True,

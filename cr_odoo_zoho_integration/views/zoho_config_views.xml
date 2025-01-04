@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <menuitem id="menu_zoho_integration_root" name="Zoho Integration" sequence="10"/>
-
-    <menuitem id="menu_zoho_configuration" name="Configuration"
-              parent="menu_zoho_integration_root" sequence="10"/>
-
     <record id="view_zoho_config_form" model="ir.ui.view">
         <field name="name">zoho.config.form</field>
         <field name="model">zoho.config</field>
@@ -12,13 +7,16 @@
             <form string="Zoho Configuration">
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="client_id"/>
-                        <field name="client_secret"/>
-                        <field name="redirect_uri"/>
-                        <field name="access_token" readonly="1"/>
-                        <field name="refresh_token" readonly="1"/>
+                        <field name="cr_name"/>
+                        <field name="cr_client_id"/>
+                        <field name="cr_client_secret"/>
+                        <field name="cr_redirect_uri"/>
+                        <field name="cr_access_token" readonly="1"/>
+                        <field name="cr_refresh_token" readonly="1"/>
+                        <field name="cr_token_expiry" readonly="1"/>
                     </group>
+                    <button string="Generate Auth URL" type="object" name="generate_auth_url" class="btn-primary"/>
+                    <button string="Refresh Access Token" type="object" name="refresh_access_token" class="btn-primary"/>
                 </sheet>
             </form>
         </field>
@@ -29,8 +27,9 @@
         <field name="model">zoho.config</field>
         <field name="arch" type="xml">
             <tree string="Zoho Configuration">
-                <field name="name"/>
-                <field name="client_id"/>
+                <field name="cr_name"/>
+                <field name="cr_client_id"/>
+                <field name="cr_token_expiry"/>
             </tree>
         </field>
     </record>
@@ -41,9 +40,8 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="menu_zoho_config"
-              name="Zoho Config"
-              parent="menu_zoho_configuration"
-              action="action_zoho_config"
-              sequence="10"/>
+    <menuitem id="menu_zoho_integration_root" name="Zoho Integration" sequence="10"/>
+    <menuitem id="menu_zoho_configuration" name="Configuration"
+              parent="menu_zoho_integration_root" sequence="10"
+              action="action_zoho_config"/>
 </odoo>
