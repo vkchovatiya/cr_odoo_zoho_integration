@@ -22,7 +22,7 @@ class ZohoConfig(models.Model):
         """Generate the authorization URL to get the grant token."""
         auth_url = "https://accounts.zoho.com/oauth/v2/auth"
         params = {
-            "scope": "ZohoCRM.users.ALL",
+            "scope": "ZohoCRM.users.ALL,ZohoCRM.modules.ALL,ZohoCRM.modules.leads.ALL,ZohoCRM.modules.deals.ALL,ZohoCRM.settings.ALL",
             "client_id": self.cr_client_id,
             "response_type": "code",
             "access_type": "offline",
