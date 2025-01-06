@@ -77,6 +77,76 @@ class ZohoConfig(models.Model):
             })
         except requests.RequestException as e:
             raise UserError(_("Error refreshing access token: %s") % e)
+    
+    def fetch_zoho_fields(self,module):
+        """
+        Fetch available fields for the Contacts module from Zoho CRM.
+        """
+        print('called')
+        fields_url = "https://www.zohoapis.com/crm/v7/settings/fields"
+        params = {"module": module}
+        headers = {"Authorization": f"Zoho-oauthtoken {self.cr_access_token}"}
+
+        try:
+            response = requests.get(fields_url, headers=headers, params=params)
+
+            data = response.json()
+
+            if 'fields' in data:
+                field_names = [field['api_name'] for field in data['fields']]
+                print(f"Fetched fields: {field_names}")
+                return field_names
+            else:
+                raise UserError(_("No fields data found in Zoho response."))
+
+        except requests.RequestException as e:
+            raise UserError(_("Error fetching Zoho fields: %s") % e)
+
+    def import_product_variants(self):
+        """Fetch products from Zoho CRM."""
+        token_url = "https://www.zohoapis.com/crm/v7/Products"
+        params = {
+            "fields": "Product_Name",
+            "per_page": 50,
+        }
+        headers = {
+            "Authorization": f"Zoho-oauthtoken {self.cr_access_token}",
+        }
+        try:
+            response = requests.get(token_url, headers=headers, params=params)
+            response.raise_for_status()
+
+
+            data = response.json()
+            for product in data['data']:
+                product_name = product.get('Product_Name')
+                product_code = product.get('Product_Code')
+                description = product.get('Description')
+                print(product_name)
+                print(product_code)
+                print(description)
+
+                existing_product = self.env['product.template'].search(
+                    [('name', '=', product_name)], limit=1)
+
+                if existing_product:
+
+                    existing_product.write({
+                        'name': product_name,
+                        'description': description,
+                    })
+                    print(f"Updated product: {product_name}")
+                else:
+
+                    self.env['product.template'].create({
+                        'name': product_name,
+                        'default_code': product_code,
+                        'description': description,
+                    })
+                    print(f"Created new product: {product_name}")
+
+        except requests.RequestException as e:
+            raise UserError(_("Error fetching products: %s") % e)
 
     def _get_zoho_api_url(self, endpoint):
         """Helper method to build the Zoho API URL."""

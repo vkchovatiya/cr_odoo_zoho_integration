@@ -11,6 +11,7 @@
         'security/ir.model.access.csv',
         'views/zoho_config_views.xml',
         'views/view_success_message.xml',
+        'views/logs.xml',
     ],
     'installable': True,
     'application': True,
