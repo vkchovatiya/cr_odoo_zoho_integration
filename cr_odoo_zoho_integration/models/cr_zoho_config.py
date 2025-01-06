@@ -18,21 +18,10 @@ class ZohoConfig(models.Model):
     cr_access_token = fields.Text(string="Access Token" )
     cr_refresh_token = fields.Text(string="Refresh Token")
     cr_token_expiry = fields.Datetime(string="Token Expiry" )
-    # cr_logs_ids = fields.One2many(
-    #     "cr.data.processing.log", "cr_configuration_id", string="Logs"
-    # )
-    cr_export_order = fields.Boolean(string="Export Order", default=False)
-    cr_import_contact = fields.Boolean(string="Import Contact", default=False)
-    cr_export_contact = fields.Boolean(string="Export Contact", default=False)
-    cr_import_account = fields.Boolean(string="Import Account", default=False)
-    cr_export_account = fields.Boolean(string="Export Account", default=False)
-    cr_auto_import_order = fields.Boolean()
-    cr_auto_export_order = fields.Boolean()
-    cr_auto_import_contact = fields.Boolean()
-    cr_auto_export_contact = fields.Boolean()
-    cr_auto_import_account = fields.Boolean()
-    cr_auto_export_account = fields.Boolean()
-    cr_import_shipping_methods = fields.Boolean(string='Import Shipping methods')
+    cr_data_logs_ids = fields.One2many(
+        "cr.data.processing.log", "cr_configuration_id", string="Logs"
+    )
+
 
     def generate_auth_url(self):
         """Generate the authorization URL to get the grant token."""
@@ -48,7 +37,7 @@ class ZohoConfig(models.Model):
         return {
             "type": "ir.actions.act_url",
             "url": url,
-            "target": "new",
+            "target": "self",
         }
 
     def exchange_grant_token(self, grant_token):
@@ -65,6 +54,7 @@ class ZohoConfig(models.Model):
             response = requests.post(token_url, data=payload)
             response.raise_for_status()
             tokens = response.json()
+            print(tokens)
             self.write({
                 'cr_access_token': tokens.get('access_token'),
                 'cr_refresh_token': tokens.get('refresh_token'),
@@ -86,6 +76,7 @@ class ZohoConfig(models.Model):
             response = requests.post(token_url, data=payload)
             response.raise_for_status()
             tokens = response.json()
+            print(tokens)
             self.write({
                 'cr_access_token': tokens.get('access_token'),
                 'cr_token_expiry': fields.Datetime.now() + timedelta(seconds=tokens.get('expires_in', 3600)),
@@ -116,52 +107,6 @@ class ZohoConfig(models.Model):
 
         except requests.RequestException as e:
             raise UserError(_("Error fetching Zoho fields: %s") % e)
-
-    def import_product_variants(self):
-        """Fetch products from Zoho CRM."""
-        token_url = "https://www.zohoapis.com/crm/v7/Products"
-        params = {
-            "fields": "Product_Name",
-            "per_page": 50,
-        }
-        headers = {
-            "Authorization": f"Zoho-oauthtoken {self.cr_access_token}",
-        }
-        try:
-            response = requests.get(token_url, headers=headers, params=params)
-            response.raise_for_status()
-
-
-            data = response.json()
-            for product in data['data']:
-                product_name = product.get('Product_Name')
-                product_code = product.get('Product_Code')
-                description = product.get('Description')
-                print(product_name)
-                print(product_code)
-                print(description)
-
-                existing_product = self.env['product.template'].search(
-                    [('name', '=', product_name)], limit=1)
-
-                if existing_product:
-
-                    existing_product.write({
-                        'name': product_name,
-                        'description': description,
-                    })
-                    print(f"Updated product: {product_name}")
-                else:
-
-                    self.env['product.template'].create({
-                        'name': product_name,
-                        'default_code': product_code,
-                        'description': description,
-                    })
-                    print(f"Created new product: {product_name}")
-
-        except requests.RequestException as e:
-            raise UserError(_("Error fetching products: %s") % e)
 
     def _get_zoho_api_url(self, endpoint):
         """Helper method to build the Zoho API URL."""

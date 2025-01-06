@@ -17,11 +17,16 @@ class DataProcessingLog(models.Model):
     cr_timestamp = fields.Char('Timestamp')
     cr_initiated_at = fields.Char('Initiated At')
     cr_message = fields.Char('Message')
-# class ResPartner(models.Model):
-#     _inherit = 'res.partner'
-#
-#     cr_recurly_id = fields.Char(string='Recurly Account Id')
-#     username = fields.Char(string='Recurly username')
-#     cc_emails = fields.Integer(string='Recurly CC Emails')
+
+    def _log_data_processing(self, table_name, record_count, status, timespan, initiated_at, error_message=''):
+        """Logs data processing operations into the DataProcessingLog model."""
+        self.env['cr.data.processing.log'].sudo().create({
+            'cr_table_name': table_name,
+            'cr_record_count': record_count,
+            'cr_status': status,
+            'cr_error_message': error_message,
+            'cr_timestamp': timespan,
+            'cr_initiated_at': initiated_at,
+        })
 
 

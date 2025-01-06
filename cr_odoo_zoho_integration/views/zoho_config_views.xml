@@ -15,6 +15,7 @@
                         <field name="cr_refresh_token" readonly="1"/>
                         <field name="cr_token_expiry" readonly="1"/>
                     </group>
+<<<<<<< HEAD
                     <button string="Generate Auth URL" type="object" name="generate_auth_url" class="btn-primary"/>
                     <button string="Refresh Access Token" type="object" name="refresh_access_token" class="btn-primary"/>
                     <button string="Fetch Zoho Deals" type="object" name="fetch_zoho_deals" class="btn-primary"/>
@@ -27,65 +28,62 @@
 <!--                            <field name="cr_import_shipping_methods"/>-->
 <!--                            <field name="cr_export_order" string="Export Order"/>-->
 <!--                        </group>-->
+=======
+                    <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+                        <button string="Generate Access token" type="object" name="generate_auth_url" class="btn-primary"/>
+                        <button string="Refresh Access Token" type="object" name="refresh_access_token" class="btn-primary"/>
+
+                    </div>
+                    <notebook>
+                    <page string="Base Import " >
+                        <div style="border-top: 2px solid #ccc; margin-top: 30px; padding-top: 10px;">
+                            <h3 style="color: #714b67;">Organizations</h3>
+                        </div>
+                        <button string="Sync Organizations" type="object" name="fetch_zoho_organizations" class="btn-primary"/>
+
+>>>>>>> 133f03343d0f6a744e8175c20278022373b2df0a
                          <div style="border-top: 2px solid #ccc; margin-top: 30px; padding-top: 10px;">
-                            <h3 style="color: #714b67;"> Sync Contacts</h3>
+                            <h3 style="color: #714b67;"> Contacts</h3>
                         </div>
                         <button string="Sync Contacts" type="object" name="import_contacts" class="oe_highlight"/>
                         <div style="border-top: 2px solid #ccc; margin-top: 30px; padding-top: 10px;">
-                            <h3 style="color: #714b67;"> Sync Products</h3>
+                            <h3 style="color: #714b67;">Properties</h3>
                         </div>
-                        <button string="Sync Products" type="object" name="import_products" class="oe_highlight"/>
-                        <div style="border-top: 2px solid #ccc; margin-top: 30px; padding-top: 10px;">
-                            <h3 style="color: #714b67;">Automatic Product Variants</h3>
-                        </div>
-                        <button string="Sync Product Variants" type="object" name="import_product_variants" class="oe_highlight"/>
+                        <button string="Sync Properties " type="object" name="import_products" class="oe_highlight"/>
 
 
                     </page>
-                    <page string="Contacts">
-                        <group>
-                            <field name="cr_import_contact" string="Import Contact"/>
-                            <field name="cr_export_contact" string="Export Contact"/>
-                        </group>
-<!--                        <button string="Sync Contacts" type="object" name="sync_contacts" class="oe_highlight"/>-->
+                    <page string="Deals">
                         <div  style="border-top: 2px solid #ccc; margin-top: 30px; padding-top: 10px;">
-                            <h3 style="color: #714b67;">Automatic Sync Contacts</h3>
+                            <h3 style="color: #714b67;">Deals</h3>
                         </div>
-                        <group>
-                            <field name="cr_auto_import_contact" string="Auto Import Contact"/>
-                            <field name="cr_auto_export_contact" string="Auto Export Contact"/>
-                        </group>
-                     </page>
-                    <page string="Accounting" >
-                        <group>
-                            <field name="cr_import_account" string="Import Account"/>
-                            <field name="cr_export_account" string="Export Account"/>
-                        </group>
-<!--                        <button string="Sync Account" type="object" name="sync_accounting" class="oe_highlight"/>-->
+                        <button string="Sync Deals" type="object" name="fetch_zoho_deals" class="btn-primary"/>
+                        <button string="Sync Zoho Companies " type="object" name="fetch_zoho_companies" class="btn-primary"/>
 
+                     </page>
+
+                    <page string="Invoice" >
                         <div  style="border-top: 2px solid #ccc; margin-top: 30px; padding-top: 10px;">
-                            <h3 style="color: #714b67;">Automatic Sync </h3>
+                            <h3 style="color: #714b67;">Invoices</h3>
                         </div>
-                        <group>
-                            <field name="cr_auto_import_account" string="Auto Import Account"/>
-                            <field name="cr_auto_export_account" string="Auto Export Account"/>
-                        </group>
+                        <button string="Sync Invoices " type="object" name="fetch_zoho_companies" class="btn-primary"/>
+
                     </page>
                 </notebook>
                 <div style="border-top: 2px; margin-top: 10px; padding-top: 10px;">
                     <h3 style="color: #714b67;">Logs</h3>
                 </div>
-<!--                <field name="cr_logs_ids">-->
-<!--                    <tree>-->
-<!--                        <field name="cr_table_name"/>-->
-<!--                        <field name="cr_record_count"/>-->
-<!--                        <field name="cr_status" string="Status"/>-->
-<!--                        <field name="cr_error_message"/>-->
-<!--                        <field name="cr_timestamp"/>-->
-<!--                        <field name="cr_message"/>-->
-<!--                        <field name="cr_initiated_at"/>-->
-<!--                    </tree>-->
-<!--                </field>-->
+                <field name="cr_data_logs_ids">
+                    <tree>
+                        <field name="cr_table_name"/>
+                        <field name="cr_record_count"/>
+                        <field name="cr_status" string="Status"/>
+                        <field name="cr_error_message"/>
+                        <field name="cr_timestamp"/>
+                        <field name="cr_message"/>
+                        <field name="cr_initiated_at"/>
+                    </tree>
+                </field>
                 </sheet>
             </form>
         </field>
