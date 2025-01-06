@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_zoho_config,access_zoho_config,model_zoho_config,,1,1,1,1
+access_cr_data_processing_log,cr_data_processing_log,model_cr_data_processing_log,,1,1,1,1

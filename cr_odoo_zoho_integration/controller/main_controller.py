@@ -11,13 +11,11 @@ class ZohoController(http.Controller):
         if not grant_token:
             return "Authorization failed: Grant token not found."
 
-        # Fetch the first Zoho configuration record
         zoho_config = request.env['zoho.config'].sudo().search([], limit=1)
         if not zoho_config:
             return "Zoho Configuration not found."
 
         try:
-            # Exchange grant token for access token
             zoho_config.exchange_grant_token(grant_token)
             return request.render('cr_odoo_zoho_integration.success_redirect_template')
         except Exception as e:
