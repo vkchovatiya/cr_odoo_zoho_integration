@@ -6,7 +6,7 @@
     'category': 'Tools',
     'summary': 'Module for Zoho integration with Odoo',
     'author': '',
-    'depends': ['base'],
+    'depends': ['base','product','stock'],
     'data': [
         'security/ir.model.access.csv',
         'views/zoho_config_views.xml',
