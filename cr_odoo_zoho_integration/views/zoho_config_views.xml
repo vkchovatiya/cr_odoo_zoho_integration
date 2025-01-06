@@ -17,6 +17,9 @@
                     </group>
                     <button string="Generate Auth URL" type="object" name="generate_auth_url" class="btn-primary"/>
                     <button string="Refresh Access Token" type="object" name="refresh_access_token" class="btn-primary"/>
+                    <button string="fetch_zoho_deals" type="object" name="fetch_zoho_deals" class="btn-primary"/>
+                    <button string="fetch_zoho_companies" type="object" name="fetch_zoho_companies" class="btn-primary"/>
+                    <button string="fetch_zoho_organizations" type="object" name="fetch_zoho_organizations" class="btn-primary"/>
                 </sheet>
             </form>
         </field>
