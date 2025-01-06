@@ -18,6 +18,21 @@ class ZohoConfig(models.Model):
     cr_access_token = fields.Text(string="Access Token" )
     cr_refresh_token = fields.Text(string="Refresh Token")
     cr_token_expiry = fields.Datetime(string="Token Expiry" )
+    # cr_logs_ids = fields.One2many(
+    #     "cr.data.processing.log", "cr_configuration_id", string="Logs"
+    # )
+    cr_export_order = fields.Boolean(string="Export Order", default=False)
+    cr_import_contact = fields.Boolean(string="Import Contact", default=False)
+    cr_export_contact = fields.Boolean(string="Export Contact", default=False)
+    cr_import_account = fields.Boolean(string="Import Account", default=False)
+    cr_export_account = fields.Boolean(string="Export Account", default=False)
+    cr_auto_import_order = fields.Boolean()
+    cr_auto_export_order = fields.Boolean()
+    cr_auto_import_contact = fields.Boolean()
+    cr_auto_export_contact = fields.Boolean()
+    cr_auto_import_account = fields.Boolean()
+    cr_auto_export_account = fields.Boolean()
+    cr_import_shipping_methods = fields.Boolean(string='Import Shipping methods')
 
     def generate_auth_url(self):
         """Generate the authorization URL to get the grant token."""
